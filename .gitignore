@@ -1,0 +1,18 @@
+# Git ignore file for DeepSeek Proxy skill
+
+# Ignore environment variables
+.env
+
+# Ignore session data (contains your login token)
+session/
+
+# Ignore Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+.dist/
+
+# Ignore proxy log files
+proxy.log
