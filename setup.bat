@@ -4,28 +4,38 @@ echo ==========================================
 echo  DeepSeek Proxy Skill Setup
 echo ==========================================
 echo.
-echo 1. Installing Python dependencies...
+echo 1. Cloning repository...
 echo.
-cd /d "D:\Documents\Default Project\deepseek-proxy-skill"
-python -m pip install -r requirements.txt >nul 2>&1
+git clone https://github.com/javadhamed-ctrl/jj-skills.git
+cd jj-skills/deepseek-proxy-skill
 echo.
-echo 2. Installing Playwright browsers...
+echo 2. Installing Python dependencies...
 echo.
-python -m playwright install chromium >nul 2>&1
+pip install -r requirements.txt
 echo.
-echo 3. Getting DeepSeek token...
+echo 3. Installing Playwright browsers...
 echo.
-echo "   Please get your token from: https://chat.deepseek.com"
-echo "   (Press F12, go to Application -> Local Storage -> chat.deepseek.com)"
-echo "   Then replace BELOW_TOKEN_HERE in .env"
+python -m playwright install chromium
 echo.
-echo 4. Starting proxy server...
+echo 4. Setting up your DeepSeek token...
 echo.
-python proxy.py > proxy.log 2>&1
+echo "   VERY IMPORTANT: You must get your own token from DeepSeek:"
+echo "   1. Open https://chat.deepseek.com in your browser"
+echo "   2. Press F12 to open DevTools"
+echo "   3. Go to Application -> Local Storage -> chat.deepseek.com"
+echo "   4. Find localStorage.getItem("userToken") and copy it"
+echo "   5. Replace the value in .env below"
+echo.
+copy .env.example .env
+notepad .env
+echo.
+echo 5. Starting proxy server...
+echo.
+python proxy.py > nul 2>&1 &
 echo.
 echo Proxy running at http://127.0.0.1:8000
 echo.
-echo 5. Testing proxy...
+echo 6. Testing proxy...
 echo.
 python -c "import requests; r = requests.get('http://127.0.0.1:8000/v1/models', timeout=5); print('Status:', r.status_code)"
 echo.
@@ -33,9 +43,10 @@ echo ==========================================
 echo  SETUP COMPLETE 
 echo ==========================================
 echo.
-echo Important: 
-echo 1. Keep the proxy running for OpenCode to use it
+echo Important Reminders:
+echo 1. Keep .env file LOCAL - never commit to GitHub
+echo 2. Your token is personal - do not share it
 echo 2. In OpenCode, select model: deepseek-local
-echo 3. Get your token from: https://chat.deepseek.com
+echo 3. Proxy must be running to use with OpenCode
 echo.
 pause
